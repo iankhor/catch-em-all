@@ -1,5 +1,19 @@
 import { BehaviorSubject } from "rxjs";
 import * as Pokedex from 'pokeapi-js-wrapper'
+import create from 'zustand'
+
+const useStore = create(set => ({
+  loading: false,
+  searchTerm: "",
+  list: [],
+  selected: null,
+  saveList: (loading, list) => set({ loading, list }),
+  select: (loading, name) => set({ loading, selected: name }),
+  search: (term) => {
+    console.log(term)
+    set({ searchTerm: term })
+  },
+}))
 
 const P = new Pokedex.Pokedex()
 
@@ -37,5 +51,6 @@ export {
   pokemonList$,
   selectedPokemon$,
   fetchPokemonList,
-  selectPokemon
+  selectPokemon,
+  useStore
 }
