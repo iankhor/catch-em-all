@@ -7,7 +7,7 @@ export default function Pokemon({ pokemon }) {
       <h1>{name}</h1>
       <p>Weight: {weight}</p>
       <p>Height: {height}</p>
-      {images.map((url) => <img src={url} />)}
+      {images.map((url, index) => <img key={index} src={url} />)}
 
     </div>
   )

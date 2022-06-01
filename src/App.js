@@ -16,7 +16,7 @@ function App() {
   useEffect(() => {
     const listSub = pokemonList$.subscribe(({ loading, data }) => {
       setLoading(loading)
-      setPokemonList(data.results)
+      setPokemonList(data?.results)
     })
     const pokemonSub = selectedPokemon$.subscribe(({ loading, data }) => {
       setLoading(loading)
@@ -37,7 +37,7 @@ function App() {
     }}>
       <Search search={search} setSearch={setSearch} list={filteredList}/>
       {pokemon && !loading && <Pokemon pokemon={pokemon}/>}
-      {loading && <div>Loading...</div>}
+      {loading && <div style={{ backgroundColor: 'grey' }}>Loading...</div>}
     </div>
   );
 }

@@ -8,22 +8,30 @@ const pokemonList$ = new BehaviorSubject({
   data: []
 })
 
-const fetchPokemonList = async () => {
-  pokemonList$.next({ loading: true, data: [] })
-  const list = await P.getPokemonsList()
-  pokemonList$.next({ loading: false, data: list })
-}
-
 const selectedPokemon$ = new BehaviorSubject({
   loading: false,
   data: null
 })
 
-const selectPokemon = async (name) => {
-  selectedPokemon$.next({ loading: true, data: null })
-  const pokemon = await P.getPokemonByName(name)
-  selectedPokemon$.next({ loading: false, data: pokemon })
+function withWrapper(observable, fetcher) {
+  return async () => {
+    observable.next({ loading: true, data: null })
+    const data = await fetcher
+    observable.next({ loading: false, data })
+  }
 }
+
+const fetchPokemonList = () =>
+  withWrapper(
+    pokemonList$,
+    P.getPokemonsList()
+  )()
+
+const selectPokemon = async (name) =>
+  withWrapper(
+    selectedPokemon$,
+    P.getPokemonByName(name)
+  )()
 
 export {
   pokemonList$,

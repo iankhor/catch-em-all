@@ -5,8 +5,8 @@ export default function PokemonList({ list }) {
     <div>
       <ul>
         {
-          list?.map((item) =>
-            <li  key={item.name} onClick={() => selectPokemon(item.name)} style={{ cursor: 'pointer' }}>
+          list?.map((item, index) =>
+            <li  key={index} onClick={() => selectPokemon(item.name)} style={{ cursor: 'pointer' }}>
               <strong>{item.name}</strong>
             </li>
           )
