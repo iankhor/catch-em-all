@@ -5,6 +5,7 @@ import Pokemon from './components/Pokemon'
 
 function App() {
   const [search, setSearch] = useState("")
+  const [loading, setLoading] = useState([])
   const [pokemonList, setPokemonList] = useState([])
   const [pokemon, setPokemon] = useState([])
   const filteredList = useMemo(() => {
@@ -13,8 +14,14 @@ function App() {
 
 
   useEffect(() => {
-    const listSub = pokemonList$.subscribe((r) => setPokemonList(r.results))
-    const pokemonSub = selectedPokemon$.subscribe(setPokemon)
+    const listSub = pokemonList$.subscribe(({ loading, data }) => {
+      setLoading(loading)
+      setPokemonList(data.results)
+    })
+    const pokemonSub = selectedPokemon$.subscribe(({ loading, data }) => {
+      setLoading(loading)
+      setPokemon(data)
+    })
 
     fetchPokemonList()
     return () => {
@@ -29,7 +36,8 @@ function App() {
       gridTemplateColumns: '1fr 1fr'
     }}>
       <Search search={search} setSearch={setSearch} list={filteredList}/>
-      {pokemon && <Pokemon pokemon={pokemon}/>}
+      {pokemon && !loading && <Pokemon pokemon={pokemon}/>}
+      {loading && <div>Loading...</div>}
     </div>
   );
 }
