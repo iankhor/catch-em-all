@@ -1,56 +1,33 @@
-import { BehaviorSubject } from "rxjs";
-import * as Pokedex from 'pokeapi-js-wrapper'
-import create from 'zustand'
+import * as Pokedex from "pokeapi-js-wrapper";
+import create from "zustand";
 
-const useStore = create(set => ({
+const useStore = create((set) => ({
   loading: false,
   searchTerm: "",
   list: [],
   selected: null,
-  saveList: (loading, list) => set({ loading, list }),
+  fetchPokemonList: fetchPokemonList(set),
+  fetchPokemon: fetchPokemon(set),
   select: (loading, name) => set({ loading, selected: name }),
-  search: (term) => {
-    console.log(term)
-    set({ searchTerm: term })
-  },
-}))
+  search: (term) => set({ searchTerm: term }),
+}));
 
-const P = new Pokedex.Pokedex()
+const P = new Pokedex.Pokedex();
 
-const pokemonList$ = new BehaviorSubject({
-  loading: false,
-  data: []
-})
+function fetchPokemon(set) {
+  return async (name) => {
+    set({ loading: true });
+    const data = await P.getPokemonByName(name);
+    set({ loading: false, selected: data });
+  };
+}
 
-const selectedPokemon$ = new BehaviorSubject({
-  loading: false,
-  data: null
-})
-
-function withWrapper(observable, fetcher) {
+function fetchPokemonList(set) {
   return async () => {
-    observable.next({ loading: true, data: null })
-    const data = await fetcher
-    observable.next({ loading: false, data })
-  }
+    set({ loading: true });
+    const data = await P.getPokemonsList();
+    set({ loading: false, list: data.results });
+  };
 }
 
-const fetchPokemonList = () =>
-  withWrapper(
-    pokemonList$,
-    P.getPokemonsList()
-  )()
-
-const selectPokemon = async (name) =>
-  withWrapper(
-    selectedPokemon$,
-    P.getPokemonByName(name)
-  )()
-
-export {
-  pokemonList$,
-  selectedPokemon$,
-  fetchPokemonList,
-  selectPokemon,
-  useStore
-}
+export { useStore };

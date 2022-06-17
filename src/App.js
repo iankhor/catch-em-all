@@ -1,6 +1,8 @@
+import { useEffect } from "react";
 import Search from "./components/Search";
 import Pokemon from "./components/Pokemon";
-import useSubscriptions from "./hooks/useSubscriptions";
+import { useStore } from "./store";
+import shallow from "zustand/shallow";
 
 const styles = {
   display: "grid",
@@ -8,7 +10,16 @@ const styles = {
 };
 
 function App() {
-  useSubscriptions();
+  const { fetchPokemonList } = useStore(
+    ({ fetchPokemonList }) => ({
+      fetchPokemonList,
+    }),
+    shallow
+  );
+
+  useEffect(() => {
+    fetchPokemonList();
+  }, []);
 
   return (
     <div style={styles}>

@@ -1,6 +1,6 @@
 # ;TLDR
 
-A app to filter down a list of pokemon with RxJS
+A app to filter down a list of pokemon with zustand
 
 ---
 
@@ -12,7 +12,7 @@ Animated demo below
 
 Notable Tech/Tools used:
 
-1. [RxJS](https://rxjs.dev/guide/overview)
+1. [Zustand](https://github.com/pmndrs/zustand)
 
 ## Instructions
 

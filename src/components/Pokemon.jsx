@@ -1,7 +1,6 @@
 import { useStore } from './../store'
 import shallow from 'zustand/shallow'
 
-
 export default function Pokemon() {
   const { selected, loading } = useStore(({ selected, loading }) => ({ selected, loading }), shallow)
 
