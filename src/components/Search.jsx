@@ -1,8 +1,11 @@
 import { useStore } from './../store'
 import PokemonList from './PokemonList'
+import shallow from 'zustand/shallow'
 
 export default function Search() {
-    const { searchTerm, search } = useStore()
+    const { searchTerm, search } = useStore(
+      ({ searchTerm, search }) => ({ searchTerm, search })
+    , shallow)
 
   return(
     <div>
