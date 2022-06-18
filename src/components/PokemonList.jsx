@@ -8,7 +8,7 @@ export default function PokemonList() {
   , shallow)
 
   const filteredList = useMemo(() => {
-    return list?.filter(p => p.name.toLowerCase().includes(searchTerm)  )
+    return list?.filter(p => p.name.toLowerCase().includes(searchTerm)).slice(0,15)
   }, [list, searchTerm])
 
   return(
