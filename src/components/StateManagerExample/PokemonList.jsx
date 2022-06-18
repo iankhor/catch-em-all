@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { useStore } from './../store'
+import { useStore } from './store'
 import shallow from 'zustand/shallow'
 
 export default function PokemonList() {

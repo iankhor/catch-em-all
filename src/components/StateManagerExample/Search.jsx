@@ -1,4 +1,4 @@
-import { useStore } from './../store'
+import { useStore } from './store'
 import PokemonList from './PokemonList'
 import shallow from 'zustand/shallow'
 
