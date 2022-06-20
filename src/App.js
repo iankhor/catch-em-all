@@ -1,32 +1,5 @@
-import { useEffect, useState } from "react";
 import StateManagerExample from "./components/StateManagerExample";
-import * as Pokedex from "pokeapi-js-wrapper";
-
-const P = new Pokedex.Pokedex();
-
-async function fetchPokemonList(set) {
-  const data = await P.getPokemonsList();
-  set(data.results);
-}
-
-function VanillaReactStateManager() {
-  const [pokemonList, setPokemonList] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-
-  useEffect(() => {
-    fetchPokemonList(setPokemonList);
-  }, []);
-
-  return (
-    <div>
-      <input
-        type="text"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-    </div>
-  );
-}
+import VanillaReactStateManager from "./components/VanillaStateManagerExample";
 
 function App() {
   return (
