@@ -22,12 +22,9 @@ export default function StateManagerExample() {
     }, [fetchPokemonList]);
   
     return (
-        <div>
-            <h1>State manager</h1>
-            <div style={styles}>
-                <Search />
-                <Pokemon />
-            </div>
+        <div style={styles}>
+            <Search />
+            <Pokemon />
         </div>
     );
   }
