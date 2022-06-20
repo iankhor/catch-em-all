@@ -2,14 +2,15 @@ import * as Pokedex from "pokeapi-js-wrapper";
 import create from "zustand";
 
 const useStore = create((set) => ({
+  // --- UI logic/bools ---
   loading: false,
   searchTerm: "",
   list: [],
   selected: null,
+  search: (term) => set({ searchTerm: term }),
+  // --- async stuff below ---
   fetchPokemonList: fetchPokemonList(set),
   fetchPokemon: fetchPokemon(set),
-  select: (loading, name) => set({ loading, selected: name }),
-  search: (term) => set({ searchTerm: term }),
 }));
 
 const P = new Pokedex.Pokedex();
